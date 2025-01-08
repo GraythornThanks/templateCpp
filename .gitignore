@@ -47,3 +47,5 @@ Thumbs.db
 
 libs/glad/include
 libs/glad/src
+
+.cache/*

@@ -1,4 +1,4 @@
-set(MAIN_EXECUTABLE_NAME demo1)
+set(MAIN_EXECUTABLE_NAME demo2)
 
 # 源文件收集
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS 
@@ -38,6 +38,9 @@ target_link_libraries(${MAIN_EXECUTABLE_NAME}
     glad
     glfw
     glm
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 # 包含目录设置
@@ -70,3 +73,4 @@ target_compile_definitions(${MAIN_EXECUTABLE_NAME}
 # 子模块添加
 add_subdirectory(./example)
 add_subdirectory(./test)
+

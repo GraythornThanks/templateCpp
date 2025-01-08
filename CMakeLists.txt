@@ -10,12 +10,6 @@ endif()
 if(DEFINED ENV{Qt6_ROOT} AND NOT DEFINED CMAKE_PREFIX_PATH)
     message(STATUS "Qt6_ROOT: $ENV{Qt6_ROOT}")
     set(CMAKE_PREFIX_PATH "$ENV{Qt6_ROOT}")
-
-    find_package(Qt6 REQUIRED COMPONENTS 
-        Core
-        Gui
-        Widgets
-    )
 endif()
 
 
@@ -61,6 +55,14 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 
 # 依赖项查找
 find_package(OpenGL REQUIRED)
+
+if(DEFINED ENV{Qt6_ROOT})
+    find_package(Qt6 REQUIRED COMPONENTS 
+        Core
+        Gui
+        Widgets
+    )
+endif()
 
 # IDE设置
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
