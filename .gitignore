@@ -44,3 +44,6 @@ ehthumbs.db
 Thumbs.db
 
 .idea/
+
+libs/glad/include
+libs/glad/src
