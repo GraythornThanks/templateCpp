@@ -1,5 +1,11 @@
 set(MAIN_EXECUTABLE_NAME demo2)
 
+find_package(Qt6 REQUIRED COMPONENTS 
+        Core
+        Gui
+        Widgets
+    )
+
 # 源文件收集
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS 
     include/*.h 
@@ -34,10 +40,6 @@ source_group(
 # 依赖项链接
 target_link_libraries(${MAIN_EXECUTABLE_NAME} 
     PRIVATE
-    OpenGL::GL
-    glad
-    glfw
-    glm
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets

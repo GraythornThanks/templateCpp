@@ -53,22 +53,14 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 
-# 依赖项查找
 find_package(OpenGL REQUIRED)
-
-if(DEFINED ENV{Qt6_ROOT})
-    find_package(Qt6 REQUIRED COMPONENTS 
-        Core
-        Gui
-        Widgets
-    )
-endif()
 
 # IDE设置
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # 子目录添加
 add_subdirectory(libs)
-add_subdirectory(demo1)
+# add_subdirectory(demo1)
+# add_subdirectory(demo2)
 add_custom_target(configure COMMAND ${CMAKE_EDIT_COMMAND} -B ${CMAKE_BINARY_DIR})
 
