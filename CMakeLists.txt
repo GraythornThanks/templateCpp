@@ -10,13 +10,14 @@ endif()
 if(DEFINED ENV{Qt6_ROOT} AND NOT DEFINED CMAKE_PREFIX_PATH)
     message(STATUS "Qt6_ROOT: $ENV{Qt6_ROOT}")
     set(CMAKE_PREFIX_PATH "$ENV{Qt6_ROOT}")
+
+    find_package(Qt6 REQUIRED COMPONENTS 
+        Core
+        Gui
+        Widgets
+    )
 endif()
 
-# find_package(Qt6 REQUIRED COMPONENTS 
-#     Core
-#     Gui
-#     Widgets
-# )
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_C_STANDARD 11)
