@@ -47,7 +47,6 @@ target_include_directories(${MAIN_EXECUTABLE_NAME}
 )
 
 # 目标属性设置
-set_output_directories(${MAIN_EXECUTABLE_NAME})
 set_target_properties(${MAIN_EXECUTABLE_NAME} 
     PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_BASE_DIR}/$<CONFIG>"

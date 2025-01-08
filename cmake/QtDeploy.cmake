@@ -16,8 +16,8 @@ function(windows_qt_deploy target)
                 --no-opengl-sw
                 $<$<CONFIG:Debug>:--debug>
                 $<$<CONFIG:Release>:--release>
-                # 使用与目标相同的输出目录
-                --dir "${OUTPUT_BASE_DIR}/$<CONFIG>"
+                # 与主CMakeLists.txt一致的输出路径
+                --dir "$<IF:$<CONFIG:Debug>,${DEBUG_OUTPUT_DIR},${RELEASE_OUTPUT_DIR}>"
                 $<TARGET_FILE:${target}>
             COMMENT "Deploying Qt dependencies for ${target}"
         )
@@ -30,8 +30,8 @@ function(macos_qt_deploy target)
         add_custom_command(TARGET ${target} POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E echo "Running macdeployqt for ${target}..."
             COMMAND ${MACDEPLOYQT_EXECUTABLE}
-                # 使用与目标相同的输出目录
-                "${OUTPUT_BASE_DIR}/$<CONFIG>/$<TARGET_FILE_NAME:${target}>.app"
+                # 与主CMakeLists.txt一致的输出路径
+                "$<IF:$<CONFIG:Debug>,${DEBUG_OUTPUT_DIR},${RELEASE_OUTPUT_DIR}>/$<TARGET_FILE_NAME:${target}>.app"
                 -verbose=1
                 -always-overwrite
             COMMENT "Deploying Qt dependencies for ${target}"
