@@ -60,7 +60,6 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # 子目录添加
 add_subdirectory(libs)
-# add_subdirectory(demo1)
-# add_subdirectory(demo2)
+add_subdirectory(gl-demo)
+# add_subdirectory(qt-demo)
 add_custom_target(configure COMMAND ${CMAKE_EDIT_COMMAND} -B ${CMAKE_BINARY_DIR})
-

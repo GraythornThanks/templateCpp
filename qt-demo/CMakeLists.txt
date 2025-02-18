@@ -1,4 +1,10 @@
-set(MAIN_EXECUTABLE_NAME demo1)
+set(MAIN_EXECUTABLE_NAME qt-demo)
+
+find_package(Qt6 REQUIRED COMPONENTS 
+        Core
+        Gui
+        Widgets
+    )
 
 # 源文件收集
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS 
@@ -34,10 +40,9 @@ source_group(
 # 依赖项链接
 target_link_libraries(${MAIN_EXECUTABLE_NAME} 
     PRIVATE
-    OpenGL::GL
-    glad
-    glfw
-    glm
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 # 包含目录设置
@@ -50,6 +55,13 @@ target_include_directories(${MAIN_EXECUTABLE_NAME}
 set_target_properties(${MAIN_EXECUTABLE_NAME} 
     PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_BASE_DIR}/$<CONFIG>"
+)
+
+add_custom_target(run-${MAIN_EXECUTABLE_NAME}
+    COMMAND $<TARGET_FILE:${MAIN_EXECUTABLE_NAME}>
+    DEPENDS ${MAIN_EXECUTABLE_NAME}
+    COMMENT "Running ${MAIN_EXECUTABLE_NAME}..."
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:${MAIN_EXECUTABLE_NAME}>
 )
 
 # 检查目标是否链接了Qt库
@@ -70,3 +82,4 @@ target_compile_definitions(${MAIN_EXECUTABLE_NAME}
 # 子模块添加
 add_subdirectory(./example)
 add_subdirectory(./test)
+

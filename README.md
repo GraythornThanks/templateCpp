@@ -2,8 +2,8 @@
 
 自用C++项目模板
 
-demo1为`glfw+glad`模板
-demo2为`qt`模板
+gl-demo为`glfw+glad`模板
+qt-demo为`qt`模板
 
 添加依赖项后，在主cmakelists中添加`add_subdirectory`选择模板
 
