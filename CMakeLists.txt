@@ -59,7 +59,14 @@ find_package(OpenGL REQUIRED)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # 子目录添加
-add_subdirectory(libs)
-add_subdirectory(gl-demo)
+if (WIN32 AND NOT MSVC)
+    add_subdirectory(libs)
+elseif()
+    find_package(glad)
+    find_package(glfw3)
+    find_package(glm)
+endif()
+
+# add_subdirectory(gl-demo)
 # add_subdirectory(qt-demo)
 add_custom_target(configure COMMAND ${CMAKE_EDIT_COMMAND} -B ${CMAKE_BINARY_DIR})

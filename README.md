@@ -9,6 +9,10 @@ qt-demo为`qt`模板
 
 ## 依赖项
 
+---------
+
+> MinGW用户建议手动构建
+
 ### glad
 
 ```bash
@@ -24,16 +28,18 @@ python -m glad --out-path ./libs/glad --generator c --api gl=4.6 --profile compa
 git submodule update --init --recursive
 ```
 
+----------
+
+> MSVC或Linux/Unix用户建议直接使用包管理器构建
+
 ### 从包管理器构建 glfw/glm
 
 #### Windows
 
 ```pwsh
-vcpkg install glfw glm
+vcpkg install glad glfw3 glm
 ```
 
 #### ArchLinux
 
-```bash
-sudo pacman -S freeglut glu libglvnd mesa glfw glm
-```
+Todo
