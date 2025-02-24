@@ -65,9 +65,11 @@ add_custom_target(run-${MAIN_EXECUTABLE_NAME}
 )
 
 # 检查目标是否链接了Qt库
-get_target_property(_target_libs ${MAIN_EXECUTABLE_NAME} LINK_LIBRARIES)
-if(_target_libs MATCHES "Qt[56]::")
-    qt_deploy(${MAIN_EXECUTABLE_NAME})
+if(WIN32)
+    get_target_property(_target_libs ${MAIN_EXECUTABLE_NAME} LINK_LIBRARIES)
+    if(_target_libs MATCHES "Qt[56]::")
+        qt_deploy(${MAIN_EXECUTABLE_NAME})
+    endif()
 endif()
 
 # 编译定义设置

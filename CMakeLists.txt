@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+﻿cmake_minimum_required(VERSION 3.27)
 
 # vcpkg工具链设置
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
@@ -59,12 +59,12 @@ find_package(OpenGL REQUIRED)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # 子目录添加
-if (WIN32 AND NOT MSVC)
-    add_subdirectory(libs)
-elseif()
+if (MSVC)
     find_package(glad)
     find_package(glfw3)
     find_package(glm)
+elseif()
+    add_subdirectory(libs)
 endif()
 
 # add_subdirectory(gl-demo)

@@ -1,4 +1,4 @@
-# _A Cpp Template Project_
+﻿# _A Cpp Template Project_
 
 自用C++项目模板
 
@@ -16,8 +16,11 @@ qt-demo为`qt`模板
 ### glad
 
 ```bash
+python -m venv gladenv
+source gladenv/bin/activate
 python -m pip install glad
 python -m glad --out-path ./libs/glad --generator c --api gl=4.6 --profile compatibility
+deactivate
 ```
 
 ### 从源码构建 glfw/glm
