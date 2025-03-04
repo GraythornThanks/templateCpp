@@ -1,24 +1,27 @@
 ﻿cmake_minimum_required(VERSION 3.27)
 
-# vcpkg工具链设置
-if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+if(WIN32)
+    if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+        message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
+        set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+    endif()
+
+    if(DEFINED ENV{Qt6_ROOT} AND NOT DEFINED CMAKE_PREFIX_PATH)
+        message(STATUS "Qt6_ROOT: $ENV{Qt6_ROOT}")
+        set(CMAKE_PREFIX_PATH "$ENV{Qt6_ROOT}")
+    endif()
 endif()
 
-# Qt6查找配置
-if(DEFINED ENV{Qt6_ROOT} AND NOT DEFINED CMAKE_PREFIX_PATH)
-    message(STATUS "Qt6_ROOT: $ENV{Qt6_ROOT}")
-    set(CMAKE_PREFIX_PATH "$ENV{Qt6_ROOT}")
-endif()
-
-
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 # CMake模块
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${CMAKE_MODULE_PATH}")
@@ -58,15 +61,7 @@ find_package(OpenGL REQUIRED)
 # IDE设置
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# 子目录添加
-if (MSVC)
-    find_package(glad)
-    find_package(glfw3)
-    find_package(glm)
-elseif()
-    add_subdirectory(libs)
-endif()
+add_subdirectory(libs)
 
-# add_subdirectory(gl-demo)
-# add_subdirectory(qt-demo)
+add_subdirectory(qt-demo)
 add_custom_target(configure COMMAND ${CMAKE_EDIT_COMMAND} -B ${CMAKE_BINARY_DIR})
