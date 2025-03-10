@@ -30,7 +30,6 @@ else()
         )
     else()
         add_executable(${MAIN_EXECUTABLE_NAME}
-            PRIVATE
             ${HEADER_FILES}
             ${SOURCE_FILES}
         )
@@ -81,7 +80,7 @@ if(WIN32)
 endif()
 
 
-install(GNUInstallDirs)
+include(GNUInstallDirs)
 if(NOT WIN32)
     install(TARGETS ${MAIN_EXECUTABLE_NAME}
         BUNDLE DESTINATION .
