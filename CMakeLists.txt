@@ -1,6 +1,6 @@
 ﻿cmake_minimum_required(VERSION 3.27)
 
-# vcpkg工具链设置
+
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
     set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
@@ -13,20 +13,20 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# CMake模块
+
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${CMAKE_MODULE_PATH}")
 include(CompilerOptions)
 
-# 构建类型设置
+
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
     message("Setting default build type to Release")
 endif()
 
-# 项目定义
+
 project(project_name VERSION 0.0.1 LANGUAGES C CXX)
 
-# 编译缓存设置
+
 if (NOT MSVC)
     find_program(CCACHE_PROGRAM ccache)
     if (CCACHE_PROGRAM)
@@ -45,10 +45,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${RELEASE_OUTPUT_DIR})
 
-# IDE设置
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-# 子目录添加
 add_subdirectory(libs)
 
 add_subdirectory(demo)
