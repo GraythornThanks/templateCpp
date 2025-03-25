@@ -6,9 +6,9 @@ if(WIN32)
         set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
     endif()
 
-    if(DEFINED ENV{Qt6_ROOT} AND NOT DEFINED CMAKE_PREFIX_PATH)
-        message(STATUS "Qt6_ROOT: $ENV{Qt6_ROOT}")
-        set(CMAKE_PREFIX_PATH "$ENV{Qt6_ROOT}")
+    if(DEFINED ENV{Qt6_DIR} AND NOT DEFINED CMAKE_PREFIX_PATH)
+        message(STATUS "Qt6_DIR: $ENV{Qt6_DIR}")
+        set(CMAKE_PREFIX_PATH "$ENV{Qt6_DIR}")
     endif()
 endif()
 
@@ -25,7 +25,6 @@ set(CMAKE_AUTORCC ON)
 
 # CMake模块
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${CMAKE_MODULE_PATH}")
-include(QtDeploy)
 include(CompilerOptions)
 
 # 构建类型设置

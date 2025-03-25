@@ -1,7 +1,6 @@
 set(MAIN_EXECUTABLE_NAME qt-demo)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Gui Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS 
     include/*.h 
@@ -14,27 +13,12 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
     src/*.cc
 )
 
+qt_add_executable(${MAIN_EXECUTABLE_NAME}
+    MANUAL_FINALIZATION
+    ${SOURCE_FILES}
+    ${HEADER_FILES}
+)
 
-if(${QT_VERSION_MAJOR} GREATER 6)
-    qt_add_executable(${MAIN_EXECUTABLE_NAME}
-        MANUAL_FINALIZATION
-        PRIVATE
-        src/main.cpp
-    )
-else()
-    if(ANDROID)
-        add_library(${MAIN_EXECUTABLE_NAME}
-            SHARED
-            ${HEADER_FILES}
-            ${SOURCE_FILES}
-        )
-    else()
-        add_executable(${MAIN_EXECUTABLE_NAME}
-            ${HEADER_FILES}
-            ${SOURCE_FILES}
-        )
-    endif()
-endif()
 
 target_include_directories(${MAIN_EXECUTABLE_NAME}
     PUBLIC 
@@ -43,25 +27,14 @@ target_include_directories(${MAIN_EXECUTABLE_NAME}
 
 target_link_libraries(${MAIN_EXECUTABLE_NAME} 
     PUBLIC
-    Qt${QT_VERSION_MAJOR}::Core
-    Qt${QT_VERSION_MAJOR}::Gui
-    Qt${QT_VERSION_MAJOR}::Widgets
-)
-
-# ios bundle id
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.what_is_for_dinner_tonight)
-endif()
-set_target_properties(${MAIN_EXECUTABLE_NAME} PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
 )
 
 set_target_properties(${MAIN_EXECUTABLE_NAME} 
     PROPERTIES
+    WIN32_EXECUTABLE TRUE
     VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_BASE_DIR}/$<CONFIG>"
 )
 
@@ -71,13 +44,6 @@ add_custom_target(run-${MAIN_EXECUTABLE_NAME}
     COMMENT "Running ${MAIN_EXECUTABLE_NAME}..."
     WORKING_DIRECTORY $<TARGET_FILE_DIR:${MAIN_EXECUTABLE_NAME}>
 )
-
-if(WIN32)
-    get_target_property(_target_libs ${MAIN_EXECUTABLE_NAME} LINK_LIBRARIES)
-    if(_target_libs MATCHES "Qt6::")
-        qt_deploy(${MAIN_EXECUTABLE_NAME})
-    endif()
-endif()
 
 
 include(GNUInstallDirs)
@@ -90,7 +56,4 @@ if(NOT WIN32)
 endif()
 
 
-
-add_subdirectory(example)
-add_subdirectory(test)
 
