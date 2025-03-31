@@ -3,11 +3,14 @@
 
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(VCPKG_ROOT $ENV{VCPKG_ROOT})
-    if(WIN32)
-        string(REPLACE "\\" "/" VCPKG_ROOT ${VCPKG_ROOT})
-    endif()
     message(STATUS "VCPKG_ROOT: ${VCPKG_ROOT}")
     set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+endif()
+
+if(NOT DEFINED Qt6_DIR AND DEFINED ENV{Qt6_DIR})
+    set(Qt6_DIR $ENV{Qt6_DIR})
+    message(STATUS "Qt6_DIR: ${Qt6_DIR}")
+    list(APPEND CMAKE_PREFIX_PATH "${Qt6_DIR}")
 endif()
 
 set(CMAKE_CXX_STANDARD 23)
@@ -17,10 +20,15 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# set(CMAKE_AUTOMOC ON)
+# set(CMAKE_AUTOUIC ON)
+# set(CMAKE_AUTORCC ON)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${CMAKE_MODULE_PATH}")
 include(CompilerOptions)
-
+if(WIN32 AND Qt6_DIR)
+    include(cmake/Win32DeployQt.cmake)
+endif()
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -28,7 +36,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-project(project_name VERSION 0.0.1 LANGUAGES C CXX)
+project(templateCpp VERSION 0.0.1 LANGUAGES C CXX)
 
 
 if (NOT MSVC)
@@ -53,6 +61,9 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 add_subdirectory(libs)
 
+
 add_subdirectory(demo)
+add_subdirectory(gl-demo)
+add_subdirectory(qt-demo)
 
 add_custom_target(configure COMMAND ${CMAKE_EDIT_COMMAND} -B ${CMAKE_BINARY_DIR})

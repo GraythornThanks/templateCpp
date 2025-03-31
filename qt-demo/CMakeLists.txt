@@ -1,0 +1,61 @@
+set(MAIN_EXECUTABLE_NAME qt-demo)
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+
+file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS 
+    include/*.h 
+    include/*.hpp
+)
+
+file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS 
+    src/*.c 
+    src/*.cpp 
+    src/*.cc
+)
+
+
+qt_add_executable(${MAIN_EXECUTABLE_NAME}
+    MANUAL_FINALIZATION
+    ${SOURCE_FILES}
+    ${HEADER_FILES}
+)
+
+
+target_include_directories(${MAIN_EXECUTABLE_NAME}
+    PUBLIC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(${MAIN_EXECUTABLE_NAME} 
+    PUBLIC
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
+
+set_target_properties(${MAIN_EXECUTABLE_NAME} 
+    PROPERTIES
+    WIN32_EXECUTABLE TRUE
+    VS_DEBUGGER_WORKING_DIRECTORY "${OUTPUT_BASE_DIR}/$<CONFIG>"
+)
+
+add_custom_target(run-${MAIN_EXECUTABLE_NAME}
+    COMMAND $<TARGET_FILE:${MAIN_EXECUTABLE_NAME}>
+    DEPENDS ${MAIN_EXECUTABLE_NAME}
+    COMMENT "Running ${MAIN_EXECUTABLE_NAME}..."
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:${MAIN_EXECUTABLE_NAME}>
+)
+
+# 如果在Windows上构建，并且Qt6_DIR已定义，应用Qt部署
+if(WIN32 AND Qt6_DIR)
+    win32_deploy_qt(${MAIN_EXECUTABLE_NAME} "${Qt6_DIR}")
+endif()
+
+include(GNUInstallDirs)
+if(NOT WIN32)
+    install(TARGETS ${MAIN_EXECUTABLE_NAME}
+        BUNDLE DESTINATION .
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+endif()
