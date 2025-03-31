@@ -2,8 +2,12 @@
 
 
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    message(STATUS "VCPKG_ROOT: $ENV{VCPKG_ROOT}")
-    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
+    set(VCPKG_ROOT $ENV{VCPKG_ROOT})
+    if(WIN32)
+        string(REPLACE "\\" "/" VCPKG_ROOT ${VCPKG_ROOT})
+    endif()
+    message(STATUS "VCPKG_ROOT: ${VCPKG_ROOT}")
+    set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 endif()
 
 set(CMAKE_CXX_STANDARD 23)
