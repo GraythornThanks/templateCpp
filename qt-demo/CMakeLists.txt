@@ -46,7 +46,6 @@ add_custom_target(run-${MAIN_EXECUTABLE_NAME}
     WORKING_DIRECTORY $<TARGET_FILE_DIR:${MAIN_EXECUTABLE_NAME}>
 )
 
-# 如果在Windows上构建，并且Qt6_DIR已定义，应用Qt部署
 if(WIN32 AND Qt6_DIR)
     win32_deploy_qt(${MAIN_EXECUTABLE_NAME} "${Qt6_DIR}")
 endif()

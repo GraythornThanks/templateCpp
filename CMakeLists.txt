@@ -9,8 +9,8 @@ endif()
 
 if(NOT DEFINED Qt6_DIR AND DEFINED ENV{Qt6_DIR})
     set(Qt6_DIR $ENV{Qt6_DIR})
-    message(STATUS "Qt6_DIR: ${Qt6_DIR}")
-    list(APPEND CMAKE_PREFIX_PATH "${Qt6_DIR}")
+    string(REPLACE "\\" "/" Qt6_DIR "${Qt6_DIR}")
+    list(APPEND CMAKE_PREFIX_PATH "${Qt6_DIR}/lib/cmake/Qt6")
 endif()
 
 set(CMAKE_CXX_STANDARD 23)
