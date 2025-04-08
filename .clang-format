@@ -18,16 +18,16 @@ AccessModifierOffset: -4
 AlignAfterOpenBracket: Align
 
 # 连续赋值时，对齐所有等号
-AlignConsecutiveAssignments: false
+AlignConsecutiveAssignments: None
 
 # 连续声明时，对齐所有声明的变量名
-AlignConsecutiveDeclarations: false
+AlignConsecutiveDeclarations: None
 
 # 左对齐逃脱换行(使用反斜杠换行)的反斜杠
 AlignEscapedNewlines: Left
 
 # 水平对齐二元和三元表达式的操作数
-AlignOperands: true
+AlignOperands: Align
 
 # 对齐连续的尾随的注释
 AlignTrailingComments: true
@@ -36,7 +36,7 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: false
 
 # 不允许短的块放在同一行
-AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: Never
 
 # 允许短的case标签放在同一行
 AllowShortCaseLabelsOnASingleLine: true
@@ -45,7 +45,7 @@ AllowShortCaseLabelsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Inline
 
 # 允许短的if语句保持在同一行
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
 
 # 允许短的循环保持在同一行
 AllowShortLoopsOnASingleLine: false
@@ -71,11 +71,11 @@ BraceWrapping:
   # class定义后面
   AfterClass: false
   # 控制语句后面
-  AfterControlStatement: false
+  AfterControlStatement: Never
   # enum定义后面
   AfterEnum: false
   # 函数定义后面
-  AfterFunction: false
+  AfterFunction: true
   # 命名空间定义后面
   AfterNamespace: false
   # struct定义后面
@@ -210,10 +210,10 @@ PointerAlignment: Left
 ReflowComments: true
 
 # 允许排序#include
-SortIncludes: false
+SortIncludes: Never
 
 # 允许排序using声明
-SortUsingDeclarations: true
+SortUsingDeclarations: Never
 
 # 在C风格类型转换后添加空格
 SpaceAfterCStyleCast: false
@@ -234,7 +234,7 @@ SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 1
 
 # 在尖括号的<后和>前添加空格
-SpacesInAngles: false
+SpacesInAngles: Never
 
 # 在C风格类型转换的括号中添加空格
 SpacesInCStyleCastParentheses: false
@@ -248,11 +248,11 @@ SpacesInParentheses: false
 # 在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
 SpacesInSquareBrackets: false
 
-# 标准: Cpp03, Cpp11, Auto
-Standard: Cpp23
+# 标准: c++11, Auto, Latest
+Standard: Latest
 
 # tab宽度
 TabWidth: 4
 
 # 使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
-UseTab: Never 
+UseTab: Never
