@@ -7,7 +7,7 @@ if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 endif()
 
-if(NOT DEFINED Qt6_DIR AND DEFINED ENV{Qt6_DIR})
+if(DEFINED ENV{Qt6_DIR})
     set(Qt6_DIR $ENV{Qt6_DIR})
     string(REPLACE "\\" "/" Qt6_DIR "${Qt6_DIR}")
     list(APPEND CMAKE_PREFIX_PATH "${Qt6_DIR}/lib/cmake/Qt6")
