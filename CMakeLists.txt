@@ -1,16 +1,20 @@
 ﻿cmake_minimum_required(VERSION 3.27)
 
 
+message(STATUS $ENV{VCPKG_ROOT})
 if (DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(VCPKG_ROOT $ENV{VCPKG_ROOT})
     message(STATUS "VCPKG_ROOT: ${VCPKG_ROOT}")
     set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "")
 endif()
 
-if(DEFINED ENV{Qt6_DIR})
-    set(Qt6_DIR $ENV{Qt6_DIR})
-    string(REPLACE "\\" "/" Qt6_DIR "${Qt6_DIR}")
-    list(APPEND CMAKE_PREFIX_PATH "${Qt6_DIR}/lib/cmake/Qt6")
+message(STATUS $ENV{Qt6_DIR})
+if(WIN32 AND DEFINED ENV{Qt6_DIR})
+    set(Qt_ROOT_DIR $ENV{Qt6_DIR})
+    list(APPEND CMAKE_PREFIX_PATH "$ENV{Qt6_DIR}/lib/cmake/Qt6")
+    if(WIN32 AND Qt_ROOT_DIR)
+        include(cmake/Win32DeployQt.cmake)
+    endif()
 endif()
 
 set(CMAKE_CXX_STANDARD 23)
@@ -20,12 +24,8 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# set(CMAKE_AUTOMOC ON)
-# set(CMAKE_AUTOUIC ON)
-# set(CMAKE_AUTORCC ON)
-
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake;${CMAKE_MODULE_PATH}")
-include(CompilerOptions)
+include(cmake/CompilerOptions)
 if(WIN32 AND Qt6_DIR)
     include(cmake/Win32DeployQt.cmake)
 endif()
