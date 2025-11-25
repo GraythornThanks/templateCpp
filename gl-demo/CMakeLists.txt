@@ -1,4 +1,4 @@
-set(MAIN_EXECUTABLE_NAME gl-demo)
+get_filename_component(MAIN_EXECUTABLE_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
